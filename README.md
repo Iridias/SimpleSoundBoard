@@ -18,3 +18,8 @@ The following audio-formats are supported:
 * "flac"
 
 The files must have the corresponding file-extension.
+
+## Screenshots:
+
+![alt tag](https://github.com/Iridias/SimpleSoundBoard/screenshots/screenshot-1-small.png "Simple SoundBoard clips overview")
+![alt tag](https://github.com/Iridias/SimpleSoundBoard/screenshots/screenshot-2-small.png "Simple SoundBoard playing a clip")
