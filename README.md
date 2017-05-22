@@ -22,4 +22,4 @@ The files must have the corresponding file-extension.
 ## Screenshots:
 
 ![alt tag](https://raw.githubusercontent.com/Iridias/SimpleSoundBoard/master/screenshots/screenshot-1-small.png "Simple SoundBoard clips overview")
-![alt tag](https://raw.githubusercontent.com/Iridias/SimpleSoundBoard/master/screenshots/screenshot-2-small.png "Simple SoundBoard playing a clip")
+![alt tag](https://raw.githubusercontent.com/Iridias/SimpleSoundBoard/master/screenshots/screenshot-4-small.png "Simple SoundBoard playing a clip")
