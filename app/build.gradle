@@ -37,4 +37,5 @@ dependencies {
 
     compile 'commons-io:commons-io:2.4'
     compile 'commons-lang:commons-lang:2.6'
+    compile 'org.apache.commons:commons-collections4:4.1'
 }

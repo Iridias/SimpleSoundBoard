@@ -16,8 +16,10 @@
 */
 package de.mgd.simplesoundboard.core;
 
+import de.mgd.simplesoundboard.SoundResourceRefreshable;
 import de.mgd.simplesoundboard.dao.FileSystemSoundResourceDao;
 import de.mgd.simplesoundboard.dao.SoundResourceDao;
+import de.mgd.simplesoundboard.listener.SoundCategoryTabSelectListener;
 import de.mgd.simplesoundboard.service.DefaultSoundResourceService;
 import de.mgd.simplesoundboard.service.SoundResourceService;
 
@@ -25,6 +27,15 @@ public class ServiceFactory {
 
     private static DefaultSoundResourceService defaultSoundResourceService;
     private static FileSystemSoundResourceDao fileSystemSoundResourceDao;
+    private static SoundCategoryTabSelectListener soundCategoryTabSelectListener;
+
+    public static void initSoundCategoryTabSelectListener(final SoundResourceRefreshable refreshable) {
+        soundCategoryTabSelectListener = new SoundCategoryTabSelectListener(refreshable);
+    }
+
+    public static SoundCategoryTabSelectListener getSoundCategoryTabSelectListener() {
+        return soundCategoryTabSelectListener;
+    }
 
     public static SoundResourceDao getOrCreateSoundResourceDao() {
         if(fileSystemSoundResourceDao == null) {

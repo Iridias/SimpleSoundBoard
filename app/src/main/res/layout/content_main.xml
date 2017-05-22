@@ -1,18 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/content_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="de.mgd.simplesoundboard.MainActivity"
     tools:showIn="@layout/activity_main">
 
-    <ListView
-        android:id="@+id/sound_entry_list"
+    <LinearLayout
+        android:id="@+id/content_nav"
+        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="10" />
+        android:layout_height="wrap_content"/>
 
-</android.support.constraint.ConstraintLayout>
+    <LinearLayout
+        android:id="@+id/content_root"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"/>
+
+</LinearLayout>

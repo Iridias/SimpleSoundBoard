@@ -23,6 +23,7 @@ import org.apache.commons.io.comparator.NameFileComparator;
 import org.apache.commons.lang.StringUtils;
 
 import java.io.File;
+import java.io.FileFilter;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -39,21 +40,65 @@ public class FileSystemSoundResourceDao implements SoundResourceDao {
 	private SoundResourceService soundResourceService;
 
 	@Override
+	public List<String> findSoundCategories() {
+		List<File> files = findFilesInStorageDirectoryIfAny(this::isSoundCategory);
+		if(files.isEmpty()) {
+			return Collections.emptyList();
+		}
+
+		files.sort(NameFileComparator.NAME_INSENSITIVE_COMPARATOR);
+		return files.stream().map(File::getName).collect(Collectors.toList());
+	}
+
+	@Override
 	public List<SoundResource> findExistingSoundResources() {
+		return findExistingSoundResources(null);
+	}
+
+	@Override
+	public List<SoundResource> findExistingSoundResources(final String category) {
+		List<File> files = findFilesInStorageDirectoryIfAny(this::isMediaFile, category);
+		if(files.isEmpty()) {
+			return Collections.emptyList();
+		}
+		files.sort(NameFileComparator.NAME_INSENSITIVE_COMPARATOR);
+
+		return files.stream().map(f -> soundResourceService.createSoundResourceFromFile(f)).collect(Collectors.toList());
+	}
+
+	@Override
+	public boolean hasCategories() {
 		File resourceDir = new File(Environment.getExternalStorageDirectory(), DEFAULT_DIR);
+		if(!resourceDir.isDirectory()) {
+			return false;
+		}
+
+		File[] subDirs = resourceDir.listFiles(this::isSoundCategory);
+
+		return subDirs != null && subDirs.length > 0;
+	}
+
+	private List<File> findFilesInStorageDirectoryIfAny(final FileFilter filter) {
+		return findFilesInStorageDirectoryIfAny(filter, null);
+	}
+
+	private List<File> findFilesInStorageDirectoryIfAny(final FileFilter filter, final String subDir) {
+		String child = StringUtils.isBlank(subDir) ? DEFAULT_DIR : DEFAULT_DIR + File.separator + subDir;
+		File resourceDir = new File(Environment.getExternalStorageDirectory(), child);
 		if(!resourceDir.isDirectory()) {
 			return Collections.emptyList();
 		}
 
-		File[] resultList = resourceDir.listFiles(this::isMediaFile);
+		File[] resultList = resourceDir.listFiles(filter);
 		if(resultList == null || resultList.length == 0) {
 			return Collections.emptyList();
 		}
 
-		List<File> files = Arrays.asList(resultList);
-		files.sort(NameFileComparator.NAME_INSENSITIVE_COMPARATOR);
+		return Arrays.asList(resultList);
+	}
 
-		return files.stream().map(f -> soundResourceService.createSoundResourceFromFile(f)).collect(Collectors.toList());
+	private boolean isSoundCategory(final File file) {
+		return file.isDirectory();
 	}
 
 	private boolean isMediaFile(final File file) {

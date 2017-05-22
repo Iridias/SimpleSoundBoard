@@ -23,6 +23,11 @@ import de.mgd.simplesoundboard.model.SoundResource;
 public interface SoundResourceDao {
 
 
+	List<String> findSoundCategories();
+
 	List<SoundResource> findExistingSoundResources();
 
+	List<SoundResource> findExistingSoundResources(String category);
+
+	boolean hasCategories();
 }
